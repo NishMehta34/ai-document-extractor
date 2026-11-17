@@ -1,0 +1,20 @@
+{
+  "invoice_number": "BP-20260002",
+  "invoice_date": "2026-09-16",
+  "due_date": "2026-10-31",
+  "vendor_name": "Bluepeak Software Inc.",
+  "vendor_address": "2200 Mission Street, Suite 400, San Francisco, CA 94110",
+  "customer_name": "Brightline Retail",
+  "currency": "EUR",
+  "subtotal": 1792.57,
+  "tax": 376.44,
+  "total": 2169.01,
+  "line_items": [
+    {
+      "description": "Database migration",
+      "quantity": 1.0,
+      "unit_price": 1792.57,
+      "amount": 1792.57
+    }
+  ]
+}

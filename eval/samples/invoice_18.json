@@ -1,0 +1,38 @@
+{
+  "invoice_number": "INV-20260018",
+  "invoice_date": "2026-10-12",
+  "due_date": "2026-11-26",
+  "vendor_name": "Harbour & Finch Consulting",
+  "vendor_address": "3 Quay Road, Bristol BS1 6QA",
+  "customer_name": "Acme Logistics",
+  "currency": "GBP",
+  "subtotal": 4930.56,
+  "tax": 986.11,
+  "total": 5916.67,
+  "line_items": [
+    {
+      "description": "Cloud hosting - monthly",
+      "quantity": 1.0,
+      "unit_price": 350.77,
+      "amount": 350.77
+    },
+    {
+      "description": "AI model integration",
+      "quantity": 1.0,
+      "unit_price": 1978.54,
+      "amount": 1978.54
+    },
+    {
+      "description": "QA testing (hours)",
+      "quantity": 2.0,
+      "unit_price": 49.2,
+      "amount": 98.4
+    },
+    {
+      "description": "Data pipeline setup",
+      "quantity": 1.0,
+      "unit_price": 2502.85,
+      "amount": 2502.85
+    }
+  ]
+}

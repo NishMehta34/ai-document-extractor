@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Document Extractor</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --ink: #1c2330; --muted: #677285; --line: #e3e6eb;
+    --accent: #2f5bea; --accent-ink: #ffffff; --good: #1f8a5b; --warn: #b7791f; --bad: #c53030;
+    --good-bg: #e7f5ee; --warn-bg: #fdf3e1; --bad-bg: #fdecec; --radius: 10px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-size: 14px; line-height: 1.45; }
+  header { background: var(--panel); border-bottom: 1px solid var(--line); padding: 14px 28px;
+           display: flex; align-items: baseline; gap: 14px; }
+  header h1 { font-size: 17px; margin: 0; }
+  header span { color: var(--muted); font-size: 13px; }
+  header a { margin-left: auto; color: var(--muted); font-size: 13px; }
+  main { display: grid; grid-template-columns: 320px 1fr; gap: 20px; padding: 20px 28px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+  .panel + .panel { margin-top: 16px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 12px; }
+  label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 4px; }
+  select, input[type=text], input[type=password] {
+    width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 7px; font: inherit; background: #fff; }
+  .drop { border: 1.5px dashed #c5cbd5; border-radius: var(--radius); padding: 22px 12px; text-align: center;
+          color: var(--muted); cursor: pointer; margin-top: 12px; transition: background .15s, border-color .15s; }
+  .drop.over, .drop:hover { background: #f0f4ff; border-color: var(--accent); }
+  .drop strong { color: var(--ink); display: block; margin-bottom: 2px; word-break: break-all; }
+  button { font: inherit; border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 7px;
+           padding: 8px 12px; cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); width: 100%;
+                   margin-top: 12px; padding: 10px; font-weight: 600; }
+  button:disabled { opacity: .55; cursor: default; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .hint { color: var(--muted); font-size: 12px; margin-top: 8px; }
+  .error { background: var(--bad-bg); color: var(--bad); padding: 10px 12px; border-radius: 7px; margin-top: 12px; }
+  .history { list-style: none; padding: 0; margin: 0; max-height: 380px; overflow: auto; }
+  .history li { padding: 8px 6px; border-bottom: 1px solid var(--line); cursor: pointer; display: flex;
+                justify-content: space-between; gap: 8px; align-items: center; }
+  .history li:hover, .history li.active { background: #f3f5f9; }
+  .history .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+  .badge.needs_review { background: var(--warn-bg); color: var(--warn); }
+  .badge.auto_approved { background: var(--good-bg); color: var(--good); }
+  .badge.reviewed { background: #e8eefc; color: var(--accent); }
+  .empty { color: var(--muted); text-align: center; padding: 60px 20px; }
+  .summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .summary h3 { margin: 0; font-size: 16px; }
+  .issues { margin: 0 0 16px; padding: 0; list-style: none; }
+  .issues li { padding: 8px 12px; border-radius: 7px; margin-bottom: 6px; }
+  .issues .error-issue { background: var(--bad-bg); color: var(--bad); }
+  .issues .warning-issue { background: var(--warn-bg); color: var(--warn); }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 12px; color: var(--muted); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  td input { width: 100%; padding: 6px 8px; border: 1px solid transparent; border-radius: 6px; font: inherit; background: transparent; }
+  td input:hover, td input:focus { border-color: var(--line); background: #fff; outline: none; }
+  tr.flagged td { background: #fffaf0; }
+  .field-name { color: var(--muted); white-space: nowrap; width: 170px; }
+  .conf { display: flex; align-items: center; gap: 8px; width: 130px; }
+  .bar { flex: 1; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+  .bar > div { height: 100%; }
+  .flags { color: var(--warn); font-size: 12px; }
+  .section-title { margin: 22px 0 6px; font-size: 13px; font-weight: 600; }
+  .actions { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+  .actions .save { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.5);
+             border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; vertical-align: -2px; margin-right: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .meta { color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>AI Document Extractor</h1>
+  <span>Invoices, purchase orders and receipts → checked, structured data</span>
+  <a href="/docs">API docs</a>
+</header>
+
+<main>
+  <aside>
+    <section class="panel">
+      <h2>New extraction</h2>
+      <div id="codeWrap" hidden>
+        <label for="code">Access code</label>
+        <input id="code" type="password" autocomplete="off">
+      </div>
+      <label for="docType">Document type</label>
+      <select id="docType"></select>
+      <div id="drop" class="drop" tabindex="0">
+        <strong id="fileName">Drop a PDF here</strong>
+        <span id="fileHint">or click to choose a file</span>
+      </div>
+      <input id="file" type="file" accept="application/pdf" hidden>
+      <button id="extractBtn" class="primary" disabled>Extract data</button>
+      <div id="limits" class="hint"></div>
+      <div id="uploadError" class="error" hidden></div>
+    </section>
+
+    <section class="panel">
+      <div class="row" style="justify-content: space-between; margin-bottom: 8px;">
+        <h2 style="margin:0">Recent</h2>
+        <div class="row">
+          <button id="exportAllCsv" title="Export all as CSV">CSV</button>
+          <button id="exportAllXlsx" title="Export all as Excel">Excel</button>
+        </div>
+      </div>
+      <ul id="history" class="history"></ul>
+    </section>
+  </aside>
+
+  <section class="panel" id="result">
+    <div class="empty">
+      Upload a text-based PDF to see the extracted fields.<br>
+      Each field gets a confidence score, and anything uncertain is flagged for review.
+    </div>
+  </section>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const state = { file: null, config: null, current: null };
+
+const store = {  // browser storage can be unavailable; never let it break the page
+  get(k) { try { return localStorage.getItem(k) || ""; } catch { return ""; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+};
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+}
+const label = (name) => name.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
+const statusText = { needs_review: "Needs review", auto_approved: "Auto-approved", reviewed: "Reviewed" };
+
+function headers(extra = {}) {
+  const code = $("code").value.trim();
+  return code ? { ...extra, "X-Access-Code": code } : extra;
+}
+
+async function api(path, options = {}) {
+  const res = await fetch(path, options);
+  if (!res.ok) {
+    let detail = res.statusText;
+    try { detail = (await res.json()).detail || detail; } catch {}
+    throw new Error(typeof detail === "string" ? detail : JSON.stringify(detail));
+  }
+  return res.status === 204 ? null : res.json();
+}
+
+async function init() {
+  state.config = await api("/api/config");
+  $("docType").innerHTML = state.config.doc_types
+    .map((d) => `<option value="${esc(d.value)}">${esc(d.label)}</option>`).join("");
+  $("codeWrap").hidden = !state.config.access_code_required;
+  $("code").value = store.get("accessCode");
+  $("limits").textContent = `Text-based PDFs up to ${state.config.max_upload_mb} MB and ${state.config.max_pages} pages. Files are not stored.`;
+  loadHistory();
+}
+
+function setFile(file) {
+  if (!file) return;
+  state.file = file;
+  $("fileName").textContent = file.name;
+  $("fileHint").textContent = `${(file.size / 1024).toFixed(0)} KB`;
+  $("extractBtn").disabled = false;
+}
+
+const drop = $("drop");
+drop.addEventListener("click", () => $("file").click());
+drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") $("file").click(); });
+$("file").addEventListener("change", (e) => setFile(e.target.files[0]));
+["dragenter", "dragover"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", (e) => setFile(e.dataTransfer.files[0]));
+$("code").addEventListener("change", () => store.set("accessCode", $("code").value.trim()));
+
+$("extractBtn").addEventListener("click", async () => {
+  const btn = $("extractBtn");
+  $("uploadError").hidden = true;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Extracting…';
+  try {
+    const form = new FormData();
+    form.append("file", state.file);
+    form.append("doc_type", $("docType").value);
+    const record = await api("/api/extract", { method: "POST", body: form, headers: headers() });
+    showRecord(record);
+    loadHistory();
+  } catch (err) {
+    $("uploadError").textContent = err.message;
+    $("uploadError").hidden = false;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Extract data";
+  }
+});
+
+async function loadHistory() {
+  const records = await api("/api/extractions?limit=30");
+  $("history").innerHTML = records.length ? records.map((r) => `
+    <li data-id="${esc(r.id)}" class="${state.current && state.current.id === r.id ? "active" : ""}">
+      <span class="name" title="${esc(r.filename)}">${esc(r.filename)}</span>
+      <span class="badge ${esc(r.status)}">${esc(statusText[r.status] || r.status)}</span>
+    </li>`).join("") : '<li class="meta" style="cursor:default">No extractions yet</li>';
+  $("history").querySelectorAll("li[data-id]").forEach((li) =>
+    li.addEventListener("click", async () => { showRecord(await api(`/api/extractions/${li.dataset.id}`)); loadHistory(); }));
+}
+
+function confidenceCell(conf) {
+  const pct = Math.round(conf * 100);
+  const color = conf >= state.config.review_threshold ? "var(--good)" : conf >= 0.4 ? "var(--warn)" : "var(--bad)";
+  return `<div class="conf"><div class="bar"><div style="width:${pct}%;background:${color}"></div></div><span>${pct}%</span></div>`;
+}
+
+function showRecord(record) {
+  state.current = record;
+  const fields = Object.entries(record.fields).filter(([name]) => name !== "line_items");
+  const items = record.data.line_items || [];
+  const itemsField = record.fields.line_items || { confidence: 1, flags: [] };
+  const issues = record.issues || [];
+
+  $("result").innerHTML = `
+    <div class="summary">
+      <div>
+        <h3>${esc(record.filename)}</h3>
+        <div class="meta">${esc(label(record.doc_type))} · ${record.pages} page(s) · model ${esc(record.model || "n/a")} · ${esc(record.created_at.replace("T", " ").slice(0, 16))}</div>
+      </div>
+      <span class="badge ${esc(record.status)}">${esc(statusText[record.status] || record.status)}</span>
+    </div>
+    ${issues.length ? `<ul class="issues">${issues.map((i) =>
+      `<li class="${i.severity === "error" ? "error-issue" : "warning-issue"}">${esc(i.message)}</li>`).join("")}</ul>` : ""}
+    <table>
+      <thead><tr><th>Field</th><th>Value</th><th>Confidence</th><th>Notes</th></tr></thead>
+      <tbody>${fields.map(([name, f]) => `
+        <tr class="${f.flags.length ? "flagged" : ""}">
+          <td class="field-name">${esc(label(name))}</td>
+          <td><input data-field="${esc(name)}" value="${esc(f.value)}"></td>
+          <td>${confidenceCell(f.confidence)}</td>
+          <td class="flags">${esc(f.flags.join(", "))}</td>
+        </tr>`).join("")}
+      </tbody>
+    </table>
+    <div class="section-title">Line items ${itemsField.flags.length ? `<span class="flags">· ${esc(itemsField.flags.join(", "))}</span>` : ""}</div>
+    <table>
+      <thead><tr><th>Description</th><th style="width:90px">Qty</th><th style="width:120px">Unit price</th><th style="width:120px">Amount</th><th style="width:40px"></th></tr></thead>
+      <tbody id="items">${items.map((it, i) => itemRow(it, i)).join("")}</tbody>
+    </table>
+    <div class="actions">
+      <button id="addItem">+ Add line</button>
+      <button id="save" class="save">Save corrections</button>
+      <button id="csv">Export CSV</button>
+      <button id="xlsx">Export Excel</button>
+      <button id="del" style="margin-left:auto;color:var(--bad)">Delete</button>
+    </div>
+    <div id="saveError" class="error" hidden></div>`;
+
+  $("addItem").onclick = () => $("items").insertAdjacentHTML("beforeend", itemRow({}, $("items").children.length));
+  $("items").addEventListener("click", (e) => { if (e.target.dataset.remove !== undefined) e.target.closest("tr").remove(); });
+  $("save").onclick = saveCorrections;
+  $("csv").onclick = () => download(`/api/extractions/${record.id}/export?format=csv`);
+  $("xlsx").onclick = () => download(`/api/extractions/${record.id}/export?format=xlsx`);
+  $("del").onclick = async () => {
+    if (!confirmDelete()) return;
+    await api(`/api/extractions/${record.id}`, { method: "DELETE", headers: headers() });
+    state.current = null;
+    $("result").innerHTML = '<div class="empty">Deleted.</div>';
+    loadHistory();
+  };
+}
+
+function confirmDelete() {  // inline confirmation instead of a browser dialog
+  const btn = $("del");
+  if (btn.dataset.armed) return true;
+  btn.dataset.armed = "1";
+  btn.textContent = "Click again to delete";
+  setTimeout(() => { if (btn.isConnected) { delete btn.dataset.armed; btn.textContent = "Delete"; } }, 3000);
+  return false;
+}
+
+function itemRow(item, i) {
+  const cell = (key) => `<td><input data-item="${key}" value="${esc(item[key])}"></td>`;
+  return `<tr>${cell("description")}${cell("quantity")}${cell("unit_price")}${cell("amount")}
+    <td><button data-remove title="Remove line" style="padding:2px 8px">×</button></td></tr>`;
+}
+
+async function saveCorrections() {
+  const data = { ...state.current.data };
+  $("result").querySelectorAll("input[data-field]").forEach((input) => {
+    data[input.dataset.field] = input.value.trim() === "" ? null : input.value.trim();
+  });
+  data.line_items = [...$("items").children].map((tr) => {
+    const item = {};
+    tr.querySelectorAll("input[data-item]").forEach((input) => {
+      item[input.dataset.item] = input.value.trim() === "" ? null : input.value.trim();
+    });
+    return item;
+  }).filter((item) => Object.values(item).some((v) => v !== null));
+  try {
+    const record = await api(`/api/extractions/${state.current.id}`, {
+      method: "PATCH", body: JSON.stringify({ data }),
+      headers: headers({ "Content-Type": "application/json" }),
+    });
+    showRecord(record);
+    loadHistory();
+  } catch (err) {
+    $("saveError").textContent = err.message;
+    $("saveError").hidden = false;
+  }
+}
+
+function download(url) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+$("exportAllCsv").onclick = () => download("/api/export?format=csv");
+$("exportAllXlsx").onclick = () => download("/api/export?format=xlsx");
+
+init().catch((err) => {
+  $("result").innerHTML = `<div class="error">Could not reach the server: ${esc(err.message)}</div>`;
+});
+</script>
+</body>
+</html>

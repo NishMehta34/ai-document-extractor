@@ -1,0 +1,20 @@
+{
+  "invoice_number": "INV-20260021",
+  "invoice_date": "2026-03-09",
+  "due_date": "2026-04-08",
+  "vendor_name": "Kestrel Data GmbH",
+  "vendor_address": "Lindenstrasse 18, 10969 Berlin",
+  "customer_name": "Evergreen Property Co",
+  "currency": "GBP",
+  "subtotal": 1645.19,
+  "tax": 0.0,
+  "total": 1645.19,
+  "line_items": [
+    {
+      "description": "AI model integration",
+      "quantity": 1.0,
+      "unit_price": 1645.19,
+      "amount": 1645.19
+    }
+  ]
+}

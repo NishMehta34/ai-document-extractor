@@ -1,0 +1,44 @@
+{
+  "invoice_number": "NW-20260004",
+  "invoice_date": "2026-06-26",
+  "due_date": null,
+  "vendor_name": "Kestrel Data GmbH",
+  "vendor_address": "Lindenstrasse 18, 10969 Berlin",
+  "customer_name": "Brightline Retail",
+  "currency": "USD",
+  "subtotal": 8031.36,
+  "tax": 662.59,
+  "total": 8693.95,
+  "line_items": [
+    {
+      "description": "QA testing (hours)",
+      "quantity": 30.0,
+      "unit_price": 57.08,
+      "amount": 1712.4
+    },
+    {
+      "description": "Backend development (hours)",
+      "quantity": 36.0,
+      "unit_price": 87.14,
+      "amount": 3137.04
+    },
+    {
+      "description": "Dashboard design",
+      "quantity": 1.0,
+      "unit_price": 1237.13,
+      "amount": 1237.13
+    },
+    {
+      "description": "Support hours",
+      "quantity": 2.0,
+      "unit_price": 57.28,
+      "amount": 114.56
+    },
+    {
+      "description": "Database migration",
+      "quantity": 1.0,
+      "unit_price": 1830.23,
+      "amount": 1830.23
+    }
+  ]
+}

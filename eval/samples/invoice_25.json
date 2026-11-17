@@ -1,0 +1,32 @@
+{
+  "invoice_number": "NW-20260025",
+  "invoice_date": "2026-01-22",
+  "due_date": "2026-02-21",
+  "vendor_name": "Bluepeak Software Inc.",
+  "vendor_address": "2200 Mission Street, Suite 400, San Francisco, CA 94110",
+  "customer_name": "Brightline Retail",
+  "currency": "USD",
+  "subtotal": 6203.56,
+  "tax": 372.21,
+  "total": 6575.77,
+  "line_items": [
+    {
+      "description": "Backend development (hours)",
+      "quantity": 44.0,
+      "unit_price": 85.48,
+      "amount": 3761.12
+    },
+    {
+      "description": "Project management (hours)",
+      "quantity": 4.0,
+      "unit_price": 75.32,
+      "amount": 301.28
+    },
+    {
+      "description": "AI model integration",
+      "quantity": 1.0,
+      "unit_price": 2141.16,
+      "amount": 2141.16
+    }
+  ]
+}

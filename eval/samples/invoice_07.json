@@ -1,0 +1,38 @@
+{
+  "invoice_number": "NW-20260007",
+  "invoice_date": "2026-09-13",
+  "due_date": "2026-10-13",
+  "vendor_name": "Veldt Systems B.V.",
+  "vendor_address": "Keizersgracht 210, 1016 DZ Amsterdam",
+  "customer_name": "Acme Logistics",
+  "currency": "USD",
+  "subtotal": 4319.8,
+  "tax": 356.38,
+  "total": 4676.18,
+  "line_items": [
+    {
+      "description": "Cloud hosting - monthly",
+      "quantity": 1.0,
+      "unit_price": 373.59,
+      "amount": 373.59
+    },
+    {
+      "description": "QA testing (hours)",
+      "quantity": 14.0,
+      "unit_price": 69.55,
+      "amount": 973.7
+    },
+    {
+      "description": "Support hours",
+      "quantity": 7.0,
+      "unit_price": 66.14,
+      "amount": 462.98
+    },
+    {
+      "description": "Data pipeline setup",
+      "quantity": 1.0,
+      "unit_price": 2509.53,
+      "amount": 2509.53
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "invoice_number": "INV-20260012",
+  "invoice_date": "2026-07-24",
+  "due_date": "2026-09-07",
+  "vendor_name": "Kestrel Data GmbH",
+  "vendor_address": "Lindenstrasse 18, 10969 Berlin",
+  "customer_name": "Acme Logistics",
+  "currency": "GBP",
+  "subtotal": 3337.23,
+  "tax": 667.45,
+  "total": 4004.68,
+  "line_items": [
+    {
+      "description": "Dashboard design",
+      "quantity": 1.0,
+      "unit_price": 1078.99,
+      "amount": 1078.99
+    },
+    {
+      "description": "Database migration",
+      "quantity": 1.0,
+      "unit_price": 1543.14,
+      "amount": 1543.14
+    },
+    {
+      "description": "Support hours",
+      "quantity": 10.0,
+      "unit_price": 71.51,
+      "amount": 715.1
+    }
+  ]
+}

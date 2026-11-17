@@ -1,0 +1,26 @@
+{
+  "invoice_number": "BP-20260017",
+  "invoice_date": "2026-09-06",
+  "due_date": "2026-10-06",
+  "vendor_name": "Harbour & Finch Consulting",
+  "vendor_address": "3 Quay Road, Bristol BS1 6QA",
+  "customer_name": "Cobalt Health Group",
+  "currency": "EUR",
+  "subtotal": 3008.43,
+  "tax": 631.77,
+  "total": 3640.2,
+  "line_items": [
+    {
+      "description": "API maintenance retainer",
+      "quantity": 1.0,
+      "unit_price": 856.43,
+      "amount": 856.43
+    },
+    {
+      "description": "Backend development (hours)",
+      "quantity": 25.0,
+      "unit_price": 86.08,
+      "amount": 2152.0
+    }
+  ]
+}

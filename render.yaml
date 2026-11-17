@@ -1,0 +1,21 @@
+# One-click deploy on Render (https://render.com): New > Blueprint > pick this repo.
+# Values marked sync: false are entered in the Render dashboard, never committed.
+services:
+  - type: web
+    name: ai-document-extractor
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: LLM_BASE_URL
+        value: https://api.openai.com/v1
+      - key: LLM_MODEL
+        value: gpt-4o-mini
+      - key: LLM_API_KEY
+        sync: false
+      - key: DEMO_ACCESS_CODE
+        sync: false
+      - key: DATABASE_URL  # a free PostgreSQL database, e.g. from Neon or Supabase
+        sync: false
+      - key: RATE_LIMIT_PER_HOUR
+        value: "20"

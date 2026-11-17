@@ -1,0 +1,38 @@
+{
+  "invoice_number": "INV-20260015",
+  "invoice_date": "2026-08-09",
+  "due_date": "2026-09-08",
+  "vendor_name": "Northwind Analytics Ltd",
+  "vendor_address": "14 Carver Street, Sheffield S1 4FS",
+  "customer_name": "Dunmore Foods",
+  "currency": "GBP",
+  "subtotal": 3252.37,
+  "tax": 650.47,
+  "total": 3902.84,
+  "line_items": [
+    {
+      "description": "API maintenance retainer",
+      "quantity": 1.0,
+      "unit_price": 741.82,
+      "amount": 741.82
+    },
+    {
+      "description": "Dashboard design",
+      "quantity": 1.0,
+      "unit_price": 1344.28,
+      "amount": 1344.28
+    },
+    {
+      "description": "Backend development (hours)",
+      "quantity": 7.0,
+      "unit_price": 85.45,
+      "amount": 598.15
+    },
+    {
+      "description": "Project management (hours)",
+      "quantity": 7.0,
+      "unit_price": 81.16,
+      "amount": 568.12
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "invoice_number": "NW-20260016",
+  "invoice_date": "2026-05-23",
+  "due_date": "2026-06-22",
+  "vendor_name": "Bluepeak Software Inc.",
+  "vendor_address": "2200 Mission Street, Suite 400, San Francisco, CA 94110",
+  "customer_name": "Brightline Retail",
+  "currency": "USD",
+  "subtotal": 3475.71,
+  "tax": 286.75,
+  "total": 3762.46,
+  "line_items": [
+    {
+      "description": "Data pipeline setup",
+      "quantity": 1.0,
+      "unit_price": 2050.59,
+      "amount": 2050.59
+    },
+    {
+      "description": "Dashboard design",
+      "quantity": 1.0,
+      "unit_price": 1425.12,
+      "amount": 1425.12
+    }
+  ]
+}

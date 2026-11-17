@@ -1,0 +1,26 @@
+{
+  "invoice_number": "BP-20260008",
+  "invoice_date": "2026-03-20",
+  "due_date": "2026-05-04",
+  "vendor_name": "Northwind Analytics Ltd",
+  "vendor_address": "14 Carver Street, Sheffield S1 4FS",
+  "customer_name": "Fable Media Ltd",
+  "currency": "EUR",
+  "subtotal": 3386.49,
+  "tax": 643.43,
+  "total": 4029.92,
+  "line_items": [
+    {
+      "description": "API maintenance retainer",
+      "quantity": 1.0,
+      "unit_price": 857.38,
+      "amount": 857.38
+    },
+    {
+      "description": "Data pipeline setup",
+      "quantity": 1.0,
+      "unit_price": 2529.11,
+      "amount": 2529.11
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "invoice_number": "BP-20260011",
+  "invoice_date": "2026-09-01",
+  "due_date": "2026-10-16",
+  "vendor_name": "Bluepeak Software Inc.",
+  "vendor_address": "2200 Mission Street, Suite 400, San Francisco, CA 94110",
+  "customer_name": "Fable Media Ltd",
+  "currency": "EUR",
+  "subtotal": 3684.76,
+  "tax": 700.1,
+  "total": 4384.86,
+  "line_items": [
+    {
+      "description": "QA testing (hours)",
+      "quantity": 28.0,
+      "unit_price": 62.56,
+      "amount": 1751.68
+    },
+    {
+      "description": "Database migration",
+      "quantity": 1.0,
+      "unit_price": 1933.08,
+      "amount": 1933.08
+    }
+  ]
+}

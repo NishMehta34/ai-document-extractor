@@ -1,0 +1,32 @@
+{
+  "invoice_number": "NW-20260001",
+  "invoice_date": "2026-02-27",
+  "due_date": "2026-03-13",
+  "vendor_name": "Veldt Systems B.V.",
+  "vendor_address": "Keizersgracht 210, 1016 DZ Amsterdam",
+  "customer_name": "Brightline Retail",
+  "currency": "USD",
+  "subtotal": 2729.41,
+  "tax": 225.18,
+  "total": 2954.59,
+  "line_items": [
+    {
+      "description": "AI model integration",
+      "quantity": 1.0,
+      "unit_price": 1927.22,
+      "amount": 1927.22
+    },
+    {
+      "description": "Support hours",
+      "quantity": 9.0,
+      "unit_price": 58.43,
+      "amount": 525.87
+    },
+    {
+      "description": "Cloud hosting - monthly",
+      "quantity": 1.0,
+      "unit_price": 276.32,
+      "amount": 276.32
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "invoice_number": "NW-20260022",
+  "invoice_date": "2026-06-04",
+  "due_date": "2026-07-19",
+  "vendor_name": "Veldt Systems B.V.",
+  "vendor_address": "Keizersgracht 210, 1016 DZ Amsterdam",
+  "customer_name": "Cobalt Health Group",
+  "currency": "USD",
+  "subtotal": 4642.15,
+  "tax": 278.53,
+  "total": 4920.68,
+  "line_items": [
+    {
+      "description": "Backend development (hours)",
+      "quantity": 9.0,
+      "unit_price": 86.05,
+      "amount": 774.45
+    },
+    {
+      "description": "Database migration",
+      "quantity": 1.0,
+      "unit_price": 1810.0,
+      "amount": 1810.0
+    },
+    {
+      "description": "QA testing (hours)",
+      "quantity": 5.0,
+      "unit_price": 54.54,
+      "amount": 272.7
+    },
+    {
+      "description": "Project management (hours)",
+      "quantity": 20.0,
+      "unit_price": 70.74,
+      "amount": 1414.8
+    },
+    {
+      "description": "Support hours",
+      "quantity": 6.0,
+      "unit_price": 61.7,
+      "amount": 370.2
+    }
+  ]
+}

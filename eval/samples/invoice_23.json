@@ -1,0 +1,20 @@
+{
+  "invoice_number": "BP-20260023",
+  "invoice_date": "2026-09-08",
+  "due_date": "2026-10-08",
+  "vendor_name": "Orbital Cloud Services LLC",
+  "vendor_address": "88 Pine Avenue, Austin, TX 78701",
+  "customer_name": "Acme Logistics",
+  "currency": "EUR",
+  "subtotal": 2829.35,
+  "tax": 537.58,
+  "total": 3366.93,
+  "line_items": [
+    {
+      "description": "Data pipeline setup",
+      "quantity": 1.0,
+      "unit_price": 2829.35,
+      "amount": 2829.35
+    }
+  ]
+}

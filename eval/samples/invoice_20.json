@@ -1,0 +1,44 @@
+{
+  "invoice_number": "BP-20260020",
+  "invoice_date": "2026-02-11",
+  "due_date": "2026-03-13",
+  "vendor_name": "Orbital Cloud Services LLC",
+  "vendor_address": "88 Pine Avenue, Austin, TX 78701",
+  "customer_name": "Evergreen Property Co",
+  "currency": "EUR",
+  "subtotal": 4915.29,
+  "tax": 933.91,
+  "total": 5849.2,
+  "line_items": [
+    {
+      "description": "Support hours",
+      "quantity": 6.0,
+      "unit_price": 62.68,
+      "amount": 376.08
+    },
+    {
+      "description": "Database migration",
+      "quantity": 1.0,
+      "unit_price": 1406.38,
+      "amount": 1406.38
+    },
+    {
+      "description": "Project management (hours)",
+      "quantity": 10.0,
+      "unit_price": 78.63,
+      "amount": 786.3
+    },
+    {
+      "description": "Cloud hosting - monthly",
+      "quantity": 1.0,
+      "unit_price": 273.27,
+      "amount": 273.27
+    },
+    {
+      "description": "Data pipeline setup",
+      "quantity": 1.0,
+      "unit_price": 2073.26,
+      "amount": 2073.26
+    }
+  ]
+}
